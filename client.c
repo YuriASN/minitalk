@@ -64,7 +64,7 @@ static int	send_str(int pid, char *str)
 		i = 8;
 		while (--i >= 0)
 		{
-			if (!(pid >> i) & 1)
+			if (!(str[j] >> i) & 1)
 			{
 				if ((kill(pid, SIGUSR1)) == -1)
 					return (0);
