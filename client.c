@@ -24,14 +24,14 @@ static int	check_pid(char *str, int *pid)
 }
 
 /* Sends a int via SIGUSR1 (bit 0) and SIGUSR2 (bit 1). */
-static int	send_int(int pid, int str_len)
+static int	send_int(int pid, int str_size)
 {
 	int	i;
 
 	i = 32;
 	while (--i >= 0)
 	{
-		if (!(str_len >> i) & 1)
+		if (!((str_size >> i) & 1))
 		{
 			if ((kill(pid, SIGUSR1)) == -1)
 			{
@@ -64,7 +64,7 @@ static int	send_str(int pid, char *str)
 		i = 8;
 		while (--i >= 0)
 		{
-			if (!(str[j] >> i) & 1)
+			if (!(pid >> i) & 1)
 			{
 				if ((kill(pid, SIGUSR1)) == -1)
 					return (0);
@@ -83,7 +83,7 @@ static int	send_str(int pid, char *str)
 int	main(int argc, char **argv)
 {
 	int	pid;
-	int	str_len;
+	int	str_size;
 
 	if (argc != 3)
 	{
@@ -92,8 +92,8 @@ int	main(int argc, char **argv)
 	}
 	if (!check_pid(argv[1], &pid))
 		exit (1);
-	str_len = ft_strlen(argv[2]);
-	if (!send_int(pid, str_len))
+	str_size = ft_strlen(argv[2]);
+	if (!send_int(pid, str_size))
 		exit (1);
 	if (!send_str(pid, argv[2]))
 	{
