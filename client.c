@@ -55,16 +55,18 @@ static int	send_int(int pid, int str_size)
 /* Sends a string via SIGUSR1 (bit 0) and SIGUSR2 (bit 1). */
 static int	send_str(int pid, char *str)
 {
-	int	i;
-	int	j;
+	unsigned char	c;
+	int				i;
+	int				j;
 
 	j = -1;
 	while (str[++j])
 	{
 		i = 8;
+		c = (unsigned char)str[j];
 		while (--i >= 0)
 		{
-			if (!(str[j] >> i) & 1)
+			if (!((c >> i) & 1))
 			{
 				if ((kill(pid, SIGUSR1)) == -1)
 					return (0);
