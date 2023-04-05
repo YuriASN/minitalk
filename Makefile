@@ -10,19 +10,10 @@ SERVER	= server.c
 BCLIENT	= client_bonus.c
 BSERVER	= server_bonus.c
 
-HASLIBFT = $(ls -fd libft)
-
-ifeq ($(HASLIBFT), libft)
-	LIBFTCLONE = @echo "Found Libft!"
-else
-	LIBFTCLONE = git clone git@github.com:YuriASN/libft.git
-endif
-
 
 all: $(NAME)
 
 $(NAME):
-	$(LIBFTCLONE)
 	@make bonus -Clibft/ --no-print-directory
 	@$(CC) $(FLAGS) $(CLIENT) $(LIBFT) -o client
 	@$(CC) $(FLAGS) $(SERVER) $(LIBFT) -o server
@@ -41,7 +32,3 @@ fclean: clean
 	@echo "\033[93mfclean done for all.\033[m"
 
 re: fclean all
-
-restart: fclean
-	@/bin/rm -rf libft
-	@echo "\033[93mRemoved libft folder.\033[m"
