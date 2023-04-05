@@ -13,7 +13,6 @@ static char	*get_leng(int sig, int *leng)
 		value |= 1;
 	if (i == 31)
 	{
-//write(1, "leng = ", 7); ft_putnbr_fd(value, 2); write(1, "\n", 1);
 		i = 0;
 		str = ft_calloc(sizeof(char *), value + 1);
 		if (!str)
@@ -34,22 +33,15 @@ static char	*get_leng(int sig, int *leng)
 Returns TRUE if char is complete in order to move to the next. */
 static int	get_str(int sig, char *str)
 {
-	static int	i;
+	static int				i;
 	static unsigned char	c;
 
-	/* if (sig == SIGUSR1)
-		write(2, "0", 1);
-	else
-		write(2, "1", 1); */
 	if (sig == SIGUSR2)
 		c |= 1;
-//ft_putnbr_fd(i, 2);
 	if (i == 7)
 	{
 		str[0] = (char)c;
-//ft_putnbr_fd((int)c, 1);
 		i = 0;
-//write(2, "char pronto\t", 12); write(2, &c, 1); write(2, "\n", 1);
 		c = 0;
 		return (1);
 	}
@@ -64,8 +56,8 @@ static void	signal_handler(int sig)
 	static int	leng;
 	static int	i;
 
-	if (!leng){
-		str = get_leng(sig, &leng);}
+	if (!leng)
+		str = get_leng(sig, &leng);
 	else if (i < leng)
 	{
 		if (get_str(sig, &str[i]))
