@@ -10,14 +10,14 @@ static int	check_pid(char *str, int *pid)
 	{
 		if (!ft_isdigit((int)str[i]))
 		{
-			ft_printf("PID must be only numbers.\n");
+			write(1, "PID must be only numbers.\n", 26);
 			return (0);
 		}
 	}
 	*pid = ft_atoi(str);
 	if (*pid < 2)
 	{
-		ft_printf("PID isn't a valid process.\n");
+		write(1, "PID isn't a valid process.\n", 27);
 		return (0);
 	}
 	return (1);
@@ -35,7 +35,7 @@ static int	send_int(int pid, int nbr)
 		{
 			if ((kill(pid, SIGUSR1)) == -1)
 			{
-				ft_printf("Kill function returned an error.\n");
+				write(1, "Kill function returned an error.\n", 33);
 				return (0);
 			}
 		}
@@ -43,7 +43,7 @@ static int	send_int(int pid, int nbr)
 		{
 			if ((kill(pid, SIGUSR2)) == -1)
 			{
-				ft_printf("Kill function returned an error.\n");
+				write(1, "Kill function returned an error.\n", 33);
 				return (0);
 			}
 		}
@@ -82,13 +82,25 @@ static int	send_str(int pid, char *str)
 	return (1);
 }
 
+/* Print msg received and close client. */
+static void	msg_received(int x)
+{
+	if (x == SIGUSR1)
+	{
+		write(1, "Server received your message!\n", 30);
+		exit (0);
+	}
+}
+
 int	main(int argc, char **argv)
 {
-	int	pid;
+	int					pid;
+	struct sigaction	sas;
 
+	sas.sa_handler = &msg_received;
 	if (argc != 3)
 	{
-		ft_printf("Invalid number of arguments.\n");
+		write(1, "Invalid number of arguments.\n", 29);
 		exit (1);
 	}
 	if (!check_pid(argv[1], &pid))
@@ -99,9 +111,11 @@ int	main(int argc, char **argv)
 		exit (1);
 	if (!send_str(pid, argv[2]))
 	{
-		ft_printf("Kill function returned an error.\n");
+		write(1, "Kill function returned an error.\n", 33);
 		exit (1);
 	}
-	ft_putnbr_fd(getpid(), 2); write(1, "\n", 1);
+	sigaction(SIGUSR1, &sas, NULL);
+	while (1)
+		continue ;
 	exit (0);
 }

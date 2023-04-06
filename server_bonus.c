@@ -76,6 +76,9 @@ static void	signal_handler(int sig)
 	}
 	if (pid_c && leng && i == leng)
 	{
+		usleep(100);
+		if (kill(pid_c, SIGUSR1) == -1)
+			write(1, "Failed to send signal back.", 27);
 //		write(2, "pid_c = ", 8);	ft_putnbr_fd(pid_c, 2);	write(2, "\n", 1);
 //		write(2, "Malloc = ", 9);	ft_putnbr_fd(leng, 2);	write(2, "\n", 1);
 		ft_putstr_fd(str, 1);
