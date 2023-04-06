@@ -102,6 +102,5 @@ int	main(int argc, char **argv)
 		ft_printf("Kill function returned an error.\n");
 		exit (1);
 	}
-	send_str(pid, "\0");
 	exit (0);
 }

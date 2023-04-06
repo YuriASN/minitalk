@@ -65,12 +65,12 @@ static void	signal_handler(int sig)
 	}
 	if (leng && i == leng)
 	{
-		leng = 0;
-		i = 0;
-		ft_putstr_fd(str, 1);
+		write(1, str, leng);
 		write(1, "\n", 1);
 		free(str);
 		str = 0;
+		leng = 0;
+		i = 0;
 	}
 }
 
@@ -86,6 +86,6 @@ int	main(void)
 	sigaction(SIGUSR1, &sas, NULL);
 	sigaction(SIGUSR2, &sas, NULL);
 	while (1)
-		usleep(100);
+		continue ;
 	exit (0);
 }
