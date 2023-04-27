@@ -76,7 +76,7 @@ static void	signal_handler(int sig)
 	}
 	if (pid_c && leng && i == leng)
 	{
-		usleep(100);
+		usleep(150);
 		if (kill(pid_c, SIGUSR1) == -1)
 			write(1, "Failed to send signal back.\n", 28);
 		write(1, str, leng);
