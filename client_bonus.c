@@ -114,8 +114,7 @@ int	main(int argc, char **argv)
 		write(1, "Kill function returned an error.\n", 33);
 		exit (1);
 	}
-	sigaction(SIGUSR1, &sas, NULL);
 	while (1)
-		continue ;
+		sigaction(SIGUSR1, &sas, NULL);
 	exit (0);
 }

@@ -98,9 +98,10 @@ int	main(void)
 	pid = getpid();
 	ft_putnbr_fd(pid, 1);
 	write(1, "\n", 2);
-	sigaction(SIGUSR1, &sas, NULL);
-	sigaction(SIGUSR2, &sas, NULL);
 	while (1)
-		continue ;
+	{
+		sigaction(SIGUSR1, &sas, NULL);
+		sigaction(SIGUSR2, &sas, NULL);
+	}
 	exit (0);
 }
